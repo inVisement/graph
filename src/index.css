@@ -1,0 +1,109 @@
+:root {
+    --background-color: rgb(230,230,230);
+    --stroke-width: 1;
+    --bold-stroke-width: 3;
+    --nav-max-width: 15rem; 
+    --font-size: calc(8px + 0.5vw);
+}
+
+html {
+    font-size: var(--font-size);
+}
+input, select, textarea, button {
+    font-size: var(--font-size);
+}
+
+
+form {
+    display: flex;
+    flex-direction: row;
+    flex-flow: wrap;
+}
+
+form label {
+    display: inline-flex;
+    margin: 0 5px;
+    width: 8rem;
+    flex-direction: column;
+}
+
+main {
+    display: flex;
+}
+
+svg {
+    width: calc(100% - var(--nav-max-width));
+}
+
+
+#filter-bar {
+    max-width: 10rem;
+}
+
+nav {
+    width: var(--nav-max-width);
+    padding-top: 2rem;
+    min-width: 10rem;
+    display: flex;
+    align-content: flex-start;
+    flex-flow: row wrap;
+}
+
+
+nav ul {
+    padding: 0;
+    overflow-y: auto;
+    height: 100%;
+}
+
+nav ul > li {
+    display: inline-block;
+    width: 15rem;
+    white-space: nowrap;    
+}
+
+button {
+    padding: 0;
+    width: fit-content; 
+}
+
+
+.line.passive {
+    opacity: 20%;
+}
+
+
+li.bold {
+    font-weight: bold;
+    background-color: rgb(230, 255, 230);
+}
+
+.line.bold{
+    stroke-width: var(--bold-stroke-width);
+}
+
+.hidden {
+    display: none;
+}
+
+
+
+.line {
+    stroke-width: var(--stroke-width);
+    fill: none;
+    opacity: 100%;
+}
+
+
+.annotation {
+    stroke-dasharray: 2;
+    stroke: black;
+}
+
+.series:hover, .mouseover {
+    stroke-width: var(--bold-stroke-width);
+    font-weight: bold;
+}
+
+
+

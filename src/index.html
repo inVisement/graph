@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PJ Charts</title>
+
+    <link rel="stylesheet" href="index.css">
+	<script src="https://d3js.org/d3.v6.min.js"></script>
+    <link rel='icon' type='image/png' href='../asset/favicon.png'>
+    <script src="https://kit.fontawesome.com/41fda8233a.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+
+
+<header>
+    <form id="setting">
+        <fieldset>
+            <legend>Data Source</legend>
+            <div>
+                <input type="radio" name="source-type" value="dataset" checked> dataset
+                <input type="radio" name="source-type" value="url"> url
+                <input type="radio" name="source-type" value="file"> file
+            </div>
+
+            <div>
+                <!--display one based on above radio selection-->
+                <select class="source-input" data-type="dataset">
+                    <!-- fill option tags from dataset sources-->
+                </select>
+                <input class="source-input" data-type="url" type="url">
+                <input class="source-input" data-type="file" type="file">
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Variables</legend>
+
+            <label class="variable">
+                X Variable
+                <select id="xVar">
+                    <!-- fill it-->
+                </select>
+            </label>
+
+            <label class="variable">
+                Y Variable
+                <select id="yVar">
+                    <!-- fill it-->
+                </select>
+            </label>
+
+            <label class="variable">
+                Slicer
+                <select id="slicer">
+                    <!-- fill it-->
+                </select>
+            </label>
+
+            <button type="button" id="draw">Draw</button>
+
+        </fieldset>
+
+        <fieldset style="display: none;">
+            <legend>Format</legend>
+            <label>
+                <select bind:value={selected} onchange="()=>setProperty({selected})">
+                        <option value={cssVar}>
+                            {cssVar.label}
+                        </option>
+                </select>
+                <div>
+                    <input style="width: 6em; height: 1em;" type={selected.type || "text"} name={selected.name} value={selected.value} min={selected.min} max={selected.max}>
+                    <button >reset</button>    
+                </div>
+            </label>
+        </fieldset>
+
+    </form>
+</header>
+
+<template id="pj-graph">    
+    <svg id='graph-easel' preserveAspectRatio='none'>
+    </svg>
+
+
+    <nav class="graph-legend">
+        <header>
+            <input id="batch-select" type="checkbox" onchange="batch_select(this)">
+            <input id="filter-bar" type="search" oninput="filter(this.value)" placeholder="filter! start typing">
+            <span>
+                <i onclick="sort_legend_items('label', 'ascending')" class="sort fas fa-sort-alpha-down"></i>
+                <i onclick="sort_legend_items('code', 'ascending')" class="sort fas fa-sort-numeric-down"></i>
+            </span>
+            <span class='hidden'>
+                <i onclick="sort_legend_items('label', 'descending')" class="sort fas fa-sort-alpha-down-alt"></i>
+                <i onclick="sort_legend_items('code', 'descending')" class="sort fas fa-sort-numeric-down-alt"></i>
+            </span>
+        </header>
+        <ul class="legend-items">
+            <!-- fill by series-->
+            <template id="legend-item-template">
+                <li class="series" key="">
+                    <input type="checkbox" onchange="drawLine(this)">
+                    <label onclick="boldSeries(this)"> 
+                    </label>
+                    <code style="float: right;"></code>
+                </li>
+            </template>
+        </ul>
+    </nav>
+</template>
+
+
+
+<main id="graph-container" style="height: 70vh;">
+
+</main>
+
+
+
+</body>
+
+<script src="header.js" type="module"></script>
+<script src="legend.js" type="module"></script>
+
+
+</html>
