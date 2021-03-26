@@ -71,7 +71,8 @@ export function populateNumbers (dataSeries, yVar) {
 window.filter = function filter (filterValue) {
     // filter functionality: filter legend items based on filterValue wa:b means has wa in it and it is bold
     let [word, style] = filterValue.split(":")
-    document.querySelectorAll("nav li").forEach( (el, i) => {
+    let lis = document.querySelectorAll("nav li")
+    lis.forEach( (el, i) => {
         let label = el.textContent.trim().toLowerCase()
         label.includes(word)? el.classList.remove("hidden") : el.classList.add("hidden")
 
@@ -99,7 +100,9 @@ window.filter = function filter (filterValue) {
                     if (i>top) el.classList.add("hidden")
                     break; 
                 } else if (style.startsWith('bottom')) {
-                    
+                    let bottom = parseInt(style.slice(6))
+                    if (i < lis.length-bottom) el.classList.add("hidden")
+                    break; 
                 }
         }
     })

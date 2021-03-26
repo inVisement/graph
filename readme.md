@@ -51,5 +51,15 @@
 
 ## add query parameter ui
 
+# how to use
+parameters get fetch from url's query parameters
+- example: url=../data/db-ranking.csv
+    &xVar=month&yVar=value&slicer=db-name&y-log=true&y-min=0.1
+    &filter=:top35&selectAll&bold=Google BigQuery,Cassandra&mode=view&filter=
+- filter (defined in legend.filter()) specials starts with :
+    - :bold, :top10, :bottom30, :check, :uncheck, w:bold, washi
+- actions (in params): defined in easel.actions()
+    - selectAll, selectNone, filter=whatever, mode=view, bold=this,that, select=this,that 
+
 
 
