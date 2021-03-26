@@ -10,7 +10,7 @@ changeEvent.initEvent('change', false, true);
 
 ////////// ELEMENTS ////////////
 const datasetEl = document.querySelector('header .source-input[data-type=dataset]')
-const variableEls = document.querySelectorAll('header .variable select')
+const columnEls = document.querySelectorAll('header .column select')
 const drawEl = document.querySelector('header button#draw')
 const sourceTypeEl = document.querySelectorAll('header input[name=source-type]')
 
@@ -31,7 +31,7 @@ datasetEl.addEventListener("change", async function() {
     data = await d3.csv(params.get('url'))
     const columns = Object.keys(data[0])
 
-    variableEls.forEach(el => {
+    columnEls.forEach(el => {
         for (let column of columns) {
             let option = optionTemplate.cloneNode()
             option.textContent = column
@@ -41,14 +41,21 @@ datasetEl.addEventListener("change", async function() {
     })
 
 
+    document.querySelector('header #y-log').checked = params.get('y-log')
+
+
+
+
 })
 
 drawEl.addEventListener("click", function() {
     xVar = getVar('xVar')
     yVar = getVar('yVar')
     slicer = getVar('slicer')
-    setupEasel({data, xVar, yVar, slicer})
-
+    let yMin = getVar('y-min')
+    let yMax = getVar('y-max')
+    let yLog = document.querySelector('header #y-log').checked
+    setupEasel({data, xVar, yVar, slicer, yMin, yMax, yLog})
 
 })
 

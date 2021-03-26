@@ -43,7 +43,7 @@ export const dataSources = {
         &selectAll&bold=United-States,World,Israel,United-Kingdom&filter=:bold
         `,
         "DB Ranking": `url=../data/db-ranking.csv
-        &xVar=month&yVar=value&slicer=db-name
+        &xVar=month&yVar=value&slicer=db-name&y-log=true
         &select=Google-BigQuery&`,
     
 }

@@ -2,15 +2,15 @@
 import {populateLegendItems, populateNumbers} from './legend.js'
 
 
-const svgEl = '#graph-easel'
-const
+const 
+    svgEl = '#graph-easel',
     margin = {left: 40, bottom: 20, right: 20, top: 10},
     width = 800, height = 400
 
 var svg, xScale, yScale, line, dataSeries
   
 
-export async function setupEasel ({data, xVar, yVar, slicer}) {
+export async function setupEasel ({data, xVar, yVar, slicer, yMin, yMax, yLog}) {
 
     // append the graph template to its container
     let template = document.querySelector('template#pj-graph')
@@ -38,6 +38,10 @@ export async function setupEasel ({data, xVar, yVar, slicer}) {
         .attr("viewBox", `-${margin.left} -${margin.top+height} ${width+margin.left+margin.right} ${height + margin.top + margin.bottom}`)
 
 
+    // determine max and min for axis range
+    yMin = yMin || d3.min(data, d=>d[yVar])
+    yMax = yMax || d3.max(data, d=>d[yVar])
+
     ////// define scalers
     // x scaler (it's a date)
     xScale = 
@@ -46,9 +50,9 @@ export async function setupEasel ({data, xVar, yVar, slicer}) {
         .nice()
         .range([ 0, width ]);
     // y scaler
-    yScale = 
-        d3.scaleLinear()
-        .domain([0, d3.max(data, function(d) { return +d[yVar] })])
+    yScale = yLog ? d3.scaleLog() : d3.scaleLinear()
+    yScale
+        .domain([yMin, yMax])
         .nice()
         .range([0, -height ]); // reverse direction
     // line function
@@ -65,7 +69,10 @@ export async function setupEasel ({data, xVar, yVar, slicer}) {
 
     // add y axis
     svg.append("g")
-        .call(d3.axisLeft(yScale));
+        .call(
+            d3.axisLeft(yScale)
+            .ticks(5, ".2s")
+        )
 
     //setTimeout(()=>writeNumbers(yVar), 1000)
 
@@ -78,9 +85,13 @@ export async function setupEasel ({data, xVar, yVar, slicer}) {
         //let y = yScale.invert(yPosition)
         
         document.querySelectorAll('nav li').forEach (li => {
-            let key = li.getAttribute('key')        
-            let row = dataSeries.get(key).find(row => row.date.toLocaleDateString() == x.toLocaleDateString())
-            li.querySelector('code').innerText = row?.[yVar]
+            let key = li.getAttribute('key')
+            let goal = x
+            var closestRow = dataSeries.get(key).reduce(function(prev, curr) {
+                return (Math.abs(curr[xVar] - goal) > Math.abs(prev[xVar] - goal) ? prev : curr);
+            })
+                    
+            li.querySelector('code').innerText = closestRow?.[yVar]
         })
 
         // remove old annotation line and draw a new one
@@ -97,9 +108,12 @@ export async function setupEasel ({data, xVar, yVar, slicer}) {
     })
 }
 
+
+
 export function drawSeries ({key, color, yVar}) {
     let values = dataSeries.get(key).filter(v => !isNaN(v[yVar]))
     let legendItem = document.querySelector(`nav li[key="${key}"]`)
+
 
     // Draw the line
     let path = svg

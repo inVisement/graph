@@ -23,5 +23,24 @@
 - [ ] rewrite legend.filter function
     - get condition and then apply to list of nodes
     - right now, for each element, it evaluates the condition
-- [ ] git commit to invisement and tmo
+- [X] git commit to invisement and tmo
+- [X] change of y-axis to logarithm
+    - working data: db-ranking
+    - problems: y-axis range too wide, double-click: error
+    - added manual entries for x and y range
+    - changed double-click to closest row
 - [ ] use it for tmo operational chart
+- [ ] upload it for public view
+
+## Markdown editor
+
+## summary table
+
+## reference cell and data in markdown
+
+## table editor (excel in markdow)
+
+## add query parameter ui
+
+
+
