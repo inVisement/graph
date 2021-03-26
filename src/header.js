@@ -1,6 +1,6 @@
 'use strict';
 
-import {setupEasel} from "./easel.js"
+import {setupEasel, actions} from "./easel.js"
 
 /////// TEMPLATE ELEMENTS /////////////
 const optionTemplate = document.createElement('option')
@@ -11,8 +11,6 @@ changeEvent.initEvent('change', false, true);
 ////////// ELEMENTS ////////////
 const datasetEl = document.querySelector('header .source-input[data-type=dataset]')
 const columnEls = document.querySelectorAll('header .column select')
-const drawEl = document.querySelector('header button#draw')
-const sourceTypeEl = document.querySelectorAll('header input[name=source-type]')
 
 const getVar = id => document.getElementById(id).value
 
@@ -25,8 +23,8 @@ export {yVar}
 
 ///////////// EVENT LISTENERS ///////////
 
-datasetEl.addEventListener("change", async function() {
-    const params = parseQuery(this.value)
+window.readDatasetParams = async function (datasetName) {
+    const params = parseQuery(datasetName)
 
     data = await d3.csv(params.get('url'))
     const columns = Object.keys(data[0])
@@ -37,18 +35,22 @@ datasetEl.addEventListener("change", async function() {
             option.textContent = column
             el.appendChild(option)    
         }
-        el.value = params.get(el.id)
+        //el.value = params.get(el.id)
     })
 
+    document.querySelectorAll('header .variables input, header .variables select')
+    .forEach(el => params.get(el.id) && (el.value = params.get(el.id)))
 
-    document.querySelector('header #y-log').checked = params.get('y-log')
+    document.querySelectorAll('header .variables input[type=checkbox]')
+    .forEach(el => el.checked = params.get(el.id)=='true')
 
+    setup_easel()
 
+    actions(params)
 
+}
 
-})
-
-drawEl.addEventListener("click", function() {
+window.setup_easel = function() {
     xVar = getVar('xVar')
     yVar = getVar('yVar')
     slicer = getVar('slicer')
@@ -57,13 +59,7 @@ drawEl.addEventListener("click", function() {
     let yLog = document.querySelector('header #y-log').checked
     setupEasel({data, xVar, yVar, slicer, yMin, yMax, yLog})
 
-})
-
-sourceTypeEl.forEach(el => {
-    el.addEventListener("click", function() {
-        switchDataSource(this.value)
-    })
-})
+}
 
 
 
@@ -84,14 +80,15 @@ async function fillDatasetSelections () {
 }
 fillDatasetSelections()
 
-
-function switchDataSource (sourceType) {
+window.switchDataSource = function(sourceType) {
     document.querySelectorAll('.source-input').forEach(el => {
         el.style.display = 'none';
     })
     document.querySelector(`.source-input[data-type=${sourceType}`).style.display = "block";
 }
 switchDataSource('dataset')
+
+
 
 
 function parseQuery (query) {

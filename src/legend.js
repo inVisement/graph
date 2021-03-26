@@ -14,10 +14,6 @@ const legendItems = 'nav ul li'
 
 ///////// EVENTS ///////////
 
-//batchSelectEl.addEventListener("change", batch_select)
-//sortEls.forEach(el => el.addEventListener("click", sort_legend_items))
-//filterEl.addEventListener("input", function() {filter(this.value)})
-
 
 window.drawLine = function (checkbox) {
     let key = checkbox.parentNode.getAttribute('key')
@@ -125,8 +121,7 @@ window.sort_legend_items = function (by='label', direction='ascending') {
     })
 }
 
-window.batch_select = async function (checkbox) {
-    let checked = checkbox.checked
+window.batch_select = async function (checked) {
     let checkSelector = checked ? ":not(:checked)" : ":checked" // if checked, select not checked and vice versa
 
     let checked_inputs = document.querySelectorAll("nav li:not(.hidden)>input" + checkSelector)

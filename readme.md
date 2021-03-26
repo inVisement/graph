@@ -29,8 +29,17 @@
     - problems: y-axis range too wide, double-click: error
     - added manual entries for x and y range
     - changed double-click to closest row
+- [X] draw upon reading query parameters
+    - setup easel
+    - read params and do actions
+- [X] create view mode that does not have the header
+
+- [ ] reading from url
+- [ ] read from url with shortening url for datasets
+- [ ] add title, x label, y label
 - [ ] use it for tmo operational chart
 - [ ] upload it for public view
+- [ ] add tooltip (title) to mouse on points
 
 ## Markdown editor
 

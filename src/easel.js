@@ -1,5 +1,9 @@
 
 import {populateLegendItems, populateNumbers} from './legend.js'
+import { changeEvent } from './header.js'
+
+const inputEvent = document.createEvent("HTMLEvents");
+inputEvent.initEvent('input', false, true);
 
 
 const 
@@ -143,3 +147,40 @@ export function drawSeries ({key, color, yVar}) {
 }
 
 
+
+export function actions (params) {
+    for (let {key, value} of params) {
+        switch (key) {
+            case 'filter':
+                //filterValue.set(value || "")
+                let filterBar = document.querySelector('header #filter-bar')
+                filterBar.value = value
+                filterBar.dispatchEvent(inputEvent)
+                break;
+            case 'selectAll':
+                batch_select(true)
+                break;
+            case 'selectNone':
+                batch_select(false)
+                break;
+            case 'select':
+                for (let key of value.split(',')) {
+                    let checkbox = document.querySelector(`nav li[key="${key}"] input`)
+                    checkbox.checked = true
+                    checkbox.dispatchEvent(changeEvent)                
+                }
+                break;
+            case 'bold':
+                for (let key of value.split(',')) {
+                    let label = document.querySelector(`nav li[key="${key}"] label`)
+                    label.click()
+                }
+                break;
+            case 'mode':
+                if (value='view') {
+                    document.querySelector('header').style.display = 'none'
+                }
+                break;
+        }
+    }
+}

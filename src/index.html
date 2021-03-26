@@ -22,14 +22,14 @@
         <fieldset>
             <legend>Data Source</legend>
             <div>
-                <input type="radio" name="source-type" value="dataset" checked> dataset
-                <input type="radio" name="source-type" value="url"> url
-                <input type="radio" name="source-type" value="file"> file
+                <input type="radio" onclick="switchDataSource('dataset');" name="source-type" checked> dataset
+                <input type="radio" onclick="switchDataSource('url');" name="source-type"> url
+                <input type="radio" onclick="switchDataSource('file');" name="source-type"> file
             </div>
 
             <div>
                 <!--display one based on above radio selection-->
-                <select class="source-input" data-type="dataset">
+                <select class="source-input" data-type="dataset" onchange="readDatasetParams(this.value);">
                     <!-- fill option tags from dataset sources-->
                 </select>
                 <input class="source-input" data-type="url" type="url">
@@ -37,7 +37,7 @@
             </div>
         </fieldset>
 
-        <fieldset>
+        <fieldset class='variables'>
             <legend>Variables</legend>
 
             <label class="column">
@@ -47,15 +47,15 @@
                 </select>
             </label>
 
-            <label class="variable">
-                y-log
-                <input type="checkbox" id="y-log">
-            </label>
             <label class="column">
                 Y Variable
                 <select id="yVar">
                     <!-- fill it-->
                 </select>
+            </label>
+            <label>
+                y-log
+                <input type="checkbox" id="y-log">
             </label>
 
             <label class="column">
@@ -75,7 +75,7 @@
                 <input id="y-max" style="width: 3em; font-size: smaller;" placeholder="auto">
             </label>
 
-            <button type="button" id="draw">Draw</button>
+            <button type="button" onclick="setup_easel()">Draw</button>
         </fieldset>
 
         <fieldset style="display: none;">
@@ -105,7 +105,7 @@
 
     <nav class="graph-legend">
         <header>
-            <input id="batch-select" type="checkbox" onchange="batch_select(this)">
+            <input id="batch-select" type="checkbox" onchange="batch_select(this.checked)">
             <input id="filter-bar" type="search" oninput="filter(this.value)" placeholder="filter! start typing">
             <span>
                 <i onclick="sort_legend_items('label', 'ascending')" class="sort fas fa-sort-alpha-down"></i>
