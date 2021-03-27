@@ -150,16 +150,16 @@ d3.schemePaired
 function generate_next_color () {
     //let hue = 0;
     //parseInt(j).toString(2).split("").reverse().forEach((d,i) => hue += (parseInt(d))/2**(i+1))
-    let section = parseInt(Math.random()/0.33)
-    let domain = Math.acos(2*Math.random()-1)/3.14
-    let hue = section*120 + domain*120
-    return d3.hsl(hue, .7 + Math.random()/3, .4).toString()
-    //return d3.interpolateSinebow(Math.random())
-    // let r = Math.random() * 255
-    // let g = Math.random() * 200
-    // let b = Math.random() * 255
-    // let l = (r+g+b)/400 // to have lightness of 400
-    // return d3.rgb(r/l,g/l,b/l).toString()
+    // let section = parseInt(Math.random()/0.33)
+    // let domain = Math.acos(2*Math.random()-1)/3.14
+    // let hue = section*120 + domain*120
+    // return d3.hsl(hue, .7 + Math.random()/3, .4).toString()
+    // return d3.interpolateSinebow(Math.random())
+    let r = Math.random() * 255
+    let g = Math.random() * 200
+    let b = Math.random() * 255
+    let l = (r+g+b)/400 // to have lightness of 400
+    return d3.rgb(r/l,g/l,b/l).toString()
 
 }
 
