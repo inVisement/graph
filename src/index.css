@@ -78,7 +78,7 @@ button {
 
 li.bold {
     font-weight: bold;
-    background-color: rgb(230, 255, 230);
+    text-decoration: underline;
 }
 
 .line.bold{
