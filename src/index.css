@@ -35,9 +35,12 @@ svg {
     width: calc(100% - var(--nav-max-width));
 }
 
-
 #filter-bar {
-    max-width: 10rem;
+    max-width: calc(var(--nav-max-width)/2);
+}
+
+i {
+    font-size: larger;
 }
 
 nav {

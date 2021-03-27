@@ -65,7 +65,7 @@ window.setup_easel = function() {
 
 //////////////// FUNCTIONS /////////////////
 
-async function fillDatasetSelections () {
+async function fillDatasetSelections (datasetName) {
     const dataset = await import('./datasets.js') 
 
     for (let [name, value] of Object.entries(dataset.dataSources)) {
@@ -73,12 +73,18 @@ async function fillDatasetSelections () {
         option.value = value
         option.textContent = name
         datasetEl.appendChild(option)
+        if (datasetName && name.toLowerCase()==datasetName.toLowerCase()) {
+            option.selected = true
+        }
     }
+
 
     datasetEl.dispatchEvent(changeEvent)
 
 }
-fillDatasetSelections()
+fillDatasetSelections(parseQuery(window.location.search.slice(1)).get('dataset'))
+
+
 
 window.switchDataSource = function(sourceType) {
     document.querySelectorAll('.source-input').forEach(el => {

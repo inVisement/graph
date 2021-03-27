@@ -20,6 +20,7 @@ window.drawLine = function (checkbox) {
     if (checkbox.checked) { // draw series line
         let color = generate_next_color()
         drawSeries({key, color, yVar})
+        checkbox.parentNode.style.color = color
     } else { // remove line
         document.querySelector(`.line[key="${key}"]`).remove()
         checkbox.parentNode.className = ""
@@ -109,13 +110,22 @@ window.filter = function filter (filterValue) {
 }
 
 window.sort_legend_items = function (by='label', direction='ascending') {
-    const score = (item, cast=String) => cast(item.querySelector(by).textContent)
+    function score (item, cast=String) {
+        if (by=='input') {
+            return item.classList.contains('bold') ? 3 : item.querySelector('input').checked ? 2 : 1
+        } else {
+            return cast(item.querySelector(by).textContent)
+        }
+    }
     //let by = this.dataset["sort"]
     let cast = {'label': String, 'code': parseFloat}[by]
     let ascend = direction == "ascending" ? 1 : -1
     let items = [...document.querySelectorAll(legendItems)]
 
-    items.sort( (a, b) => score(a, cast) < score(b, cast) || !score(a,cast) ? -ascend : ascend )
+    items.sort( (a, b) => score(a, cast) == score(b,cast) ? 0 :
+        score(a,cast) > score(b,cast)? ascend :
+        score(a, cast) < score(b, cast) ? -ascend : 
+        score(a,cast) ? ascend : -ascend ) // if none of above, a or b is NaN
     document.querySelector("nav ul").replaceChildren(...items)
 
     // toggle hidden class
@@ -134,6 +144,7 @@ window.batch_select = async function (checked) {
     }
 }
 
+d3.schemePaired
 
 // sequential color hue generator (number to hue)
 function generate_next_color () {
@@ -143,10 +154,11 @@ function generate_next_color () {
     let domain = Math.acos(2*Math.random()-1)/3.14
     let hue = section*120 + domain*120
     return d3.hsl(hue, .7 + Math.random()/3, .4).toString()
+    //return d3.interpolateSinebow(Math.random())
     // let r = Math.random() * 255
     // let g = Math.random() * 200
     // let b = Math.random() * 255
-    // let l = (r+g+b)/200 // to have lightness of 400
+    // let l = (r+g+b)/400 // to have lightness of 400
     // return d3.rgb(r/l,g/l,b/l).toString()
 
 }

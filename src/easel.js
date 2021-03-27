@@ -170,10 +170,26 @@ export function actions (params) {
                     checkbox.dispatchEvent(changeEvent)                
                 }
                 break;
+            case 'deselect':
+                for (let key of value.split(',')) {
+                    let checkbox = document.querySelector(`nav li[key="${key}"] input`)
+                    checkbox.checked = false
+                    checkbox.dispatchEvent(changeEvent)                
+                }
+                break;
             case 'bold':
                 for (let key of value.split(',')) {
                     let label = document.querySelector(`nav li[key="${key}"] label`)
                     label.click()
+                }
+                break;
+            case 'sort':
+                if (value) {
+                    let direction = value.includes('-')? 'ascending' : 'descending'
+                    sort_legend_items(value.replace('-',''), direction)    
+                } else {
+                    sort_legend_items('code', 'descending')
+                    sort_legend_items('input', 'descending')                    
                 }
                 break;
             case 'mode':

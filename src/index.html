@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="Description" content="graph your csv datasets with a few clicks">
     <title>PJ Charts</title>
 
     <link rel="stylesheet" href="index.css">
@@ -110,10 +111,12 @@
             <span>
                 <i onclick="sort_legend_items('label', 'ascending')" class="sort fas fa-sort-alpha-down"></i>
                 <i onclick="sort_legend_items('code', 'ascending')" class="sort fas fa-sort-numeric-down"></i>
+                <i onclick="sort_legend_items('input', 'ascending')" class="sort fas fa-sort-amount-down-alt"></i>
             </span>
             <span class='hidden'>
                 <i onclick="sort_legend_items('label', 'descending')" class="sort fas fa-sort-alpha-down-alt"></i>
                 <i onclick="sort_legend_items('code', 'descending')" class="sort fas fa-sort-numeric-down-alt"></i>
+                <i onclick="sort_legend_items('input', 'descending')" class="sort fas fa-sort-amount-down"></i>
             </span>
         </header>
         <ul class="legend-items">

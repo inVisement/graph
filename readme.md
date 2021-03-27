@@ -20,9 +20,6 @@
     - each template element should have the event handlers
     - why? then we do not need to worry about if the element populated when deploying the event handler
 - [X] change sort function to have sort(by, direction) and make it inline for readability
-- [ ] rewrite legend.filter function
-    - get condition and then apply to list of nodes
-    - right now, for each element, it evaluates the condition
 - [X] git commit to invisement and tmo
 - [X] change of y-axis to logarithm
     - working data: db-ranking
@@ -33,13 +30,24 @@
     - setup easel
     - read params and do actions
 - [X] create view mode that does not have the header
+- [X] add sort by importance (bold, check, uncheck)
+- [X] #BUG: labels do not have color
+- [X] add sorts to actions 
+- [ ] when changing y-var it draws the same graph
+    - write a function get snapshot to get bolds, selected
+- [ ] add title, x label, y label
 
 - [ ] reading from url
 - [ ] read from url with shortening url for datasets
-- [ ] add title, x label, y label
 - [ ] use it for tmo operational chart
-- [ ] upload it for public view
+- [X] upload it for public view
 - [ ] add tooltip (title) to mouse on points
+- [ ] dialog to create actions
+- [ ] rewrite legend.filter function
+    - get condition and then apply to list of nodes
+    - right now, for each element, it evaluates the condition
+
+
 
 ## Markdown editor
 
@@ -55,11 +63,10 @@
 parameters get fetch from url's query parameters
 - example: url=../data/db-ranking.csv
     &xVar=month&yVar=value&slicer=db-name&y-log=true&y-min=0.1
-    &filter=:top35&selectAll&bold=Google BigQuery,Cassandra&mode=view&filter=
+    &filter=:top35&selectAll&bold=Google BigQuery,Cassandra&mode=view&filter=&sort
 - filter (defined in legend.filter()) specials starts with :
     - :bold, :top10, :bottom30, :check, :uncheck, w:bold, washi
 - actions (in params): defined in easel.actions()
-    - selectAll, selectNone, filter=whatever, mode=view, bold=this,that, select=this,that 
-
+    - selectAll, selectNone, sort, sort=-label, filter=whatever, mode=view, bold=this,that, select=this,that, deselect=this,that
 
 
