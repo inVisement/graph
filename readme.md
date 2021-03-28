@@ -7,9 +7,14 @@ If you have a dataset (in csv format) and want to visualize it and share it, you
 
 ## Visualize Public Datasets
 https://invisement.github.io/graph/src/
-- US Covid-19 Vaccination by States
+- [US Covid-19 Vaccination by States
+    - https://invisement.github.io/graph/src/?mode=view&dataset=us-covid-vaccination
 - World Covid-19 Vaccination by Country or Region
+    - https://invisement.github.io/graph/src/?mode=view&dataset=world-covid-vaccination
+- US Covid Cases and Death
+    - https://invisement.github.io/graph/src/?mode=view&dataset=us-states-covid
 - DB Rankings
+    - https://invisement.github.io/graph/src/?mode=view&dataset=db-ranking
 
 To add new dataset, make an entry in ./src/datasets.js and commit
 For now, our graphing only supports time-series databases in csv format. Just say where the data source is and it automatically graphs it 

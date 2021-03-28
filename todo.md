@@ -33,7 +33,7 @@
 - [X] #BUG: labels do not have color
 - [X] add sorts to actions
 - [ ] combine two columns for slicer
-- [ ] combine url query parameters with dataset query parameters
+- [X] combine url query parameters with dataset query parameters
     - for example if url has ?dataset=us-covid-vaccination&mode=view just do that graph in view mode
 - [ ] #BUG: when choosing new dataset, columns are added
     - when new dataset selected, everything should be from scratch, including header

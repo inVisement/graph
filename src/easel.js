@@ -179,6 +179,9 @@ export function actions (params) {
                 break;
             case 'bold':
                 for (let key of value.split(',')) {
+                    let checkbox = document.querySelector(`nav li[key="${key}"] input`)
+                    checkbox.checked = true
+                    checkbox.dispatchEvent(changeEvent)                
                     let label = document.querySelector(`nav li[key="${key}"] label`)
                     label.click()
                 }
@@ -197,6 +200,7 @@ export function actions (params) {
                     document.querySelector('header').style.display = 'none'
                 }
                 break;
+
         }
     }
 }

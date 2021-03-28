@@ -24,7 +24,9 @@ export {yVar}
 ///////////// EVENT LISTENERS ///////////
 
 window.readDatasetParams = async function (datasetName) {
-    const params = parseQuery(datasetName)
+
+    // parse params and add the url query params
+    const params = parseQuery(datasetName+window.location.search.replace('?','&'))
 
     data = await d3.csv(params.get('url'))
     const columns = Object.keys(data[0])
@@ -66,6 +68,7 @@ window.setup_easel = function() {
 //////////////// FUNCTIONS /////////////////
 
 async function fillDatasetSelections (datasetName) {
+
     const dataset = await import('./datasets.js') 
 
     for (let [name, value] of Object.entries(dataset.dataSources)) {
