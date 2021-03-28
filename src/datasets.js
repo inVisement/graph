@@ -50,7 +50,7 @@ export const dataSources = {
         `,
         "DB-Ranking": `url=../data/db-ranking.csv
         &xVar=month&yVar=value&slicer=db-name&y-log=true&y-min=0.1
-        &filter=:top35&selectAll&bold=Google BigQuery,Cassandra&mode=view&filter=&sort`,
+        &filter=:top35&selectAll&bold=Google BigQuery,Cassandra&filter=&sort`,
 
         "prd-elastic-search": `url=http://npe.analytics.ods.tfb.t-mobile.com:8099/elastic-search-nodes-stats/prd-elastic-search-tfb.csv
         &xVar=date&yVar=heapPercent&slicer=name
