@@ -76,7 +76,7 @@
                 <input id="y-max" style="width: 3em; font-size: smaller;" placeholder="auto">
             </label>
 
-            <button type="button" onclick="setup_easel()">Draw</button>
+            <button type="button" id='submit-variables'>Setup</button>
         </fieldset>
 
         <fieldset style="display: none;">
@@ -123,7 +123,7 @@
             <!-- fill by series-->
             <template id="legend-item-template">
                 <li class="series" key="">
-                    <input type="checkbox" onchange="drawLine(this)">
+                    <input type="checkbox">
                     <label onclick="boldSeries(this)"> 
                     </label>
                     <code style="float: right;"></code>
@@ -143,8 +143,8 @@
 
 </body>
 
+<script src="index.js" type="module"></script>
 <script src="header.js" type="module"></script>
-<script src="legend.js" type="module"></script>
 
 
 </html>

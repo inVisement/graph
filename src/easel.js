@@ -1,20 +1,32 @@
+'use strict'
 
 import {populateLegendItems, populateNumbers} from './legend.js'
-import { changeEvent } from './header.js'
+import {data} from './header.js'
 
-const inputEvent = document.createEvent("HTMLEvents");
-inputEvent.initEvent('input', false, true);
-
-
+// VARS
 const 
     svgEl = '#graph-easel',
     margin = {left: 40, bottom: 20, right: 20, top: 10},
     width = 800, height = 400
 
 var svg, xScale, yScale, line, dataSeries
-  
 
-export async function setupEasel ({data, xVar, yVar, slicer, yMin, yMax, yLog}) {
+export var xVar, yVar, slicer
+
+const getVar = id => document.getElementById(id).value
+
+
+
+export function setupEasel () {
+
+    xVar = getVar('xVar')
+    yVar = getVar('yVar')
+    slicer = getVar('slicer')
+
+    let yMin = getVar('y-min')
+    let yMax = getVar('y-max')
+    let yLog = document.querySelector('header #y-log').checked
+
 
     // append the graph template to its container
     let template = document.querySelector('template#pj-graph')
@@ -78,7 +90,6 @@ export async function setupEasel ({data, xVar, yVar, slicer, yMin, yMax, yLog}) 
             .ticks(5, ".2s")
         )
 
-    //setTimeout(()=>writeNumbers(yVar), 1000)
 
     populateLegendItems(dataSeries)
     populateNumbers(dataSeries, yVar)
@@ -112,8 +123,6 @@ export async function setupEasel ({data, xVar, yVar, slicer, yMin, yMax, yLog}) 
     })
 }
 
-
-
 export function drawSeries ({key, color, yVar}) {
     let values = dataSeries.get(key).filter(v => !isNaN(v[yVar]))
     let legendItem = document.querySelector(`nav li[key="${key}"]`)
@@ -144,63 +153,4 @@ export function drawSeries ({key, color, yVar}) {
         path.classed("mouseover", false)
     })
 
-}
-
-
-
-export function actions (params) {
-    for (let {key, value} of params) {
-        switch (key) {
-            case 'filter':
-                //filterValue.set(value || "")
-                let filterBar = document.querySelector('header #filter-bar')
-                filterBar.value = value
-                filterBar.dispatchEvent(inputEvent)
-                break;
-            case 'selectAll':
-                batch_select(true)
-                break;
-            case 'selectNone':
-                batch_select(false)
-                break;
-            case 'select':
-                for (let key of value.split(',')) {
-                    let checkbox = document.querySelector(`nav li[key="${key}"] input`)
-                    checkbox.checked = true
-                    checkbox.dispatchEvent(changeEvent)                
-                }
-                break;
-            case 'deselect':
-                for (let key of value.split(',')) {
-                    let checkbox = document.querySelector(`nav li[key="${key}"] input`)
-                    checkbox.checked = false
-                    checkbox.dispatchEvent(changeEvent)                
-                }
-                break;
-            case 'bold':
-                for (let key of value.split(',')) {
-                    let checkbox = document.querySelector(`nav li[key="${key}"] input`)
-                    checkbox.checked = true
-                    checkbox.dispatchEvent(changeEvent)                
-                    let label = document.querySelector(`nav li[key="${key}"] label`)
-                    label.click()
-                }
-                break;
-            case 'sort':
-                if (value) {
-                    let direction = value.includes('-')? 'ascending' : 'descending'
-                    sort_legend_items(value.replace('-',''), direction)    
-                } else {
-                    sort_legend_items('code', 'descending')
-                    sort_legend_items('input', 'descending')                    
-                }
-                break;
-            case 'mode':
-                if (value='view') {
-                    document.querySelector('header').style.display = 'none'
-                }
-                break;
-
-        }
-    }
 }

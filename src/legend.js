@@ -1,12 +1,9 @@
 'use strict';
 
-import {drawSeries} from './easel.js'
-import {yVar, changeEvent} from './header.js'
+import {drawSeries, yVar} from './easel.js'
+import {changeEvent} from './header.js'
 
 ///////// ELEMENTS /////////
-//const batchSelectEl = document.querySelector("nav header #batch-select")
-//const sortEls = document.querySelectorAll("nav header .sort")
-//const filterEl = document.querySelector("nav header #filter-bar")
 const legendItemTemplate = "nav #legend-item-template"
 const legend = 'nav ul'
 
@@ -15,15 +12,15 @@ const legendItems = 'nav ul li'
 ///////// EVENTS ///////////
 
 
-window.drawLine = function (checkbox) {
-    let key = checkbox.parentNode.getAttribute('key')
-    if (checkbox.checked) { // draw series line
+function checkSeries () {
+    let key = this.parentNode.getAttribute('key')
+    if (this.checked) { // draw series line
         let color = generate_next_color()
         drawSeries({key, color, yVar})
-        checkbox.parentNode.style.color = color
+        this.parentNode.style.color = color
     } else { // remove line
         document.querySelector(`.line[key="${key}"]`).remove()
-        checkbox.parentNode.className = ""
+        this.parentNode.className = ""
     }
     checkBolds()
 }
@@ -57,7 +54,11 @@ export function populateLegendItems (dataSeries) {
         let item = document.querySelector(legendItemTemplate).content.cloneNode(true)
         item.querySelector('label').textContent = key
         item.querySelector('li').setAttribute('key', key)
+        item.querySelector('input[type=checkbox]').addEventListener('change', checkSeries)
+        
         document.querySelector(legend).appendChild(item)
+
+
     })
 }
 
@@ -144,7 +145,6 @@ window.batch_select = async function (checked) {
     }
 }
 
-d3.schemePaired
 
 // sequential color hue generator (number to hue)
 function generate_next_color () {

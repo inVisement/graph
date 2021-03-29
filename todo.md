@@ -35,6 +35,7 @@
 - [ ] combine two columns for slicer
 - [X] combine url query parameters with dataset query parameters
     - for example if url has ?dataset=us-covid-vaccination&mode=view just do that graph in view mode
+- [ ] #BUG: y-min remains the same when changing dataset
 - [ ] #BUG: when choosing new dataset, columns are added
     - when new dataset selected, everything should be from scratch, including header
 - [ ] when changing y-var it draws the same graph

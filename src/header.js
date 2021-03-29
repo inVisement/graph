@@ -1,27 +1,31 @@
 'use strict';
 
-import {setupEasel, actions} from "./easel.js"
+import {setupEasel} from './easel.js'
+
 
 /////// TEMPLATE ELEMENTS /////////////
 const optionTemplate = document.createElement('option')
+
 export const changeEvent = document.createEvent("HTMLEvents");
 changeEvent.initEvent('change', false, true);
+
+const inputEvent = document.createEvent("HTMLEvents");
+inputEvent.initEvent('input', false, true);
 
 
 ////////// ELEMENTS ////////////
 const datasetEl = document.querySelector('header .source-input[data-type=dataset]')
 const columnEls = document.querySelectorAll('header .column select')
 
-const getVar = id => document.getElementById(id).value
-
 
 ////////// DATA //////////
-var data, xVar, yVar, slicer
+export var data
 
-export {yVar}
 
 
 ///////////// EVENT LISTENERS ///////////
+
+
 
 window.readDatasetParams = async function (datasetName) {
 
@@ -46,20 +50,9 @@ window.readDatasetParams = async function (datasetName) {
     document.querySelectorAll('header .variables input[type=checkbox]')
     .forEach(el => el.checked = params.get(el.id)=='true')
 
-    setup_easel()
+    setupEasel()
 
     actions(params)
-
-}
-
-window.setup_easel = function() {
-    xVar = getVar('xVar')
-    yVar = getVar('yVar')
-    slicer = getVar('slicer')
-    let yMin = getVar('y-min')
-    let yMax = getVar('y-max')
-    let yLog = document.querySelector('header #y-log').checked
-    setupEasel({data, xVar, yVar, slicer, yMin, yMax, yLog})
 
 }
 
@@ -112,3 +105,60 @@ function parseQuery (query) {
 }
 
 
+
+export function actions (params) {
+    for (let {key, value} of params) {
+        switch (key) {
+            case 'filter':
+                //filterValue.set(value || "")
+                let filterBar = document.querySelector('header #filter-bar')
+                filterBar.value = value
+                filterBar.dispatchEvent(inputEvent)
+                break;
+            case 'selectAll':
+                batch_select(true)
+                break;
+            case 'selectNone':
+                batch_select(false)
+                break;
+            case 'select':
+                for (let key of value.split(',')) {
+                    let checkbox = document.querySelector(`nav li[key="${key}"] input`)
+                    checkbox.checked = true
+                    checkbox.dispatchEvent(changeEvent)                
+                }
+                break;
+            case 'deselect':
+                for (let key of value.split(',')) {
+                    let checkbox = document.querySelector(`nav li[key="${key}"] input`)
+                    checkbox.checked = false
+                    checkbox.dispatchEvent(changeEvent)                
+                }
+                break;
+            case 'bold':
+                for (let key of value.split(',')) {
+                    let checkbox = document.querySelector(`nav li[key="${key}"] input`)
+                    checkbox.checked = true
+                    checkbox.dispatchEvent(changeEvent)                
+                    let label = document.querySelector(`nav li[key="${key}"] label`)
+                    label.click()
+                }
+                break;
+            case 'sort':
+                if (value) {
+                    let direction = value.includes('-')? 'ascending' : 'descending'
+                    sort_legend_items(value.replace('-',''), direction)    
+                } else {
+                    sort_legend_items('code', 'descending')
+                    sort_legend_items('input', 'descending')                    
+                }
+                break;
+            case 'mode':
+                if (value='view') {
+                    document.querySelector('header').style.display = 'none'
+                }
+                break;
+
+        }
+    }
+}
