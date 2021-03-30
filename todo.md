@@ -32,11 +32,17 @@
 - [X] add sort by importance (bold, check, uncheck)
 - [X] #BUG: labels do not have color
 - [X] add sorts to actions
-- [ ] combine two columns for slicer
+- [X] combine two columns for slicer
+    - [ ] #HACK: for now, we use input (env/host/name), change it to multiple select
+- [ ] change header to "dataset: log y-var on x-var by slicer from to apply 
+- [ ] checkbox to bold items
+- [ ] add query params for bold,check,uncheck,unbold
+    - bold=:tea means 1)filter tea 2)bold all 3)empty filter
 - [X] combine url query parameters with dataset query parameters
+    - window.location.search + dataset.query
     - for example if url has ?dataset=us-covid-vaccination&mode=view just do that graph in view mode
 - [ ] #BUG: y-min remains the same when changing dataset
-- [ ] #BUG: when choosing new dataset, columns are added
+- [X] #BUG: #TODO: #HERE: when choosing new dataset, old values are not reset, new ones added to old ones
     - when new dataset selected, everything should be from scratch, including header
 - [ ] when changing y-var it draws the same graph
     - write a function get snapshot to get bolds, selected
@@ -54,6 +60,10 @@
 
 
 ## FEATURES
+- [ ] aggregator
+    - if data has state,city it can aggregate in state level with function sum,mean,etc
+- [ ] Derivator: (us-states-covid dataset) make daily cases graph out of total: feasibility
+- [ ] two-axis graph: put two columns in display
 - [ ] Markdown editor
 - [ ] summary table
 - [ ] reference cell and data in markdown

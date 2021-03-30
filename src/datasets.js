@@ -53,11 +53,11 @@ export const dataSources = {
         &filter=:top35&selectAll&bold=Google BigQuery,Cassandra&filter=&sort`,
 
         "prd-elastic-search": `url=http://npe.analytics.ods.tfb.t-mobile.com:8099/elastic-search-nodes-stats/prd-elastic-search-tfb.csv
-        &xVar=date&yVar=heapPercent&slicer=name
+        &xVar=date&yVar=heapPercent&slicer=env/host/name
         &selectAll&sort=code
         `,
         "npe-elastic-search": `url=http://npe.analytics.ods.tfb.t-mobile.com:8099/elastic-search-nodes-stats/npe-elastic-search-tfb.csv
-        &xVar=date&yVar=heapPercent&slicer=name
+        &xVar=date&yVar=heapPercent&slicer=env/host/name
         &selectAll&sort=code
         `,
     

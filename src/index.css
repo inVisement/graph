@@ -1,7 +1,7 @@
 :root {
     --background-color: rgb(230,230,230);
     --stroke-width: 1;
-    --bold-stroke-width: 3;
+    --bold-stroke-width: 2;
     --nav-max-width: 15rem; 
     --font-size: calc(8px + 0.5vw);
 }

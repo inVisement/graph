@@ -15,7 +15,6 @@ inputEvent.initEvent('input', false, true);
 
 ////////// ELEMENTS ////////////
 const datasetEl = document.querySelector('header .source-input[data-type=dataset]')
-const columnEls = document.querySelectorAll('header .column select')
 
 
 ////////// DATA //////////
@@ -30,22 +29,29 @@ export var data
 window.readDatasetParams = async function (datasetName) {
 
     // parse params and add the url query params
-    const params = parseQuery(datasetName+window.location.search.replace('?','&'))
+    const params = parseQuery(window.location.search.replace('?','&')+datasetName)
 
     data = await d3.csv(params.get('url'))
     const columns = Object.keys(data[0])
 
-    columnEls.forEach(el => {
+    document.querySelectorAll('header .variables input, header .variables select').forEach(input => {
+        input.innerHTML = ""
+        input.value = ""
+    })
+
+    document.querySelectorAll('header .column select').forEach(el => {
         for (let column of columns) {
             let option = optionTemplate.cloneNode()
             option.textContent = column
             el.appendChild(option)    
         }
-        //el.value = params.get(el.id)
     })
 
     document.querySelectorAll('header .variables input, header .variables select')
-    .forEach(el => params.get(el.id) && (el.value = params.get(el.id)))
+    .forEach(el => {
+        params.get(el.id) && (el.value = params.get(el.id))
+    })
+
 
     document.querySelectorAll('header .variables input[type=checkbox]')
     .forEach(el => el.checked = params.get(el.id)=='true')

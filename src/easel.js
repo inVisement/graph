@@ -39,7 +39,8 @@ export function setupEasel () {
     for (let d of data) {
         d[xVar] = new Date(d[xVar])
         d[yVar] = parseFloat(d[yVar])
-        d[slicer] = d[slicer].replaceAll(/["]/ig, '-') // get rid of troubling characters
+        d[slicer] = slicer.split('/').map(col=>d[col]).join('/').replaceAll(/["]/ig, '-')
+        //d[slicer] = d[slicer].replaceAll(/["]/ig, '-') // get rid of troubling characters
     }
     // create series: Map(slicer => [{col:value}])
     dataSeries = d3.group(data, d=>d[slicer]) 

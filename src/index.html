@@ -59,11 +59,15 @@
                 <input type="checkbox" id="y-log">
             </label>
 
-            <label class="column">
-                Slicer
-                <select id="slicer">
-                    <!-- fill it-->
+            <!--label class="column">
+                slicer
+                <select id="slicer" multiple>
                 </select>
+            </label-->
+            
+            <label>
+                slicer
+                <input id='slicer'>
             </label>
 
 
@@ -107,6 +111,7 @@
     <nav class="graph-legend">
         <header>
             <input id="batch-select" type="checkbox" onchange="batch_select(this.checked)">
+            <button onclick="batch_bold(this)">B</button>
             <input id="filter-bar" type="search" oninput="filter(this.value)" placeholder="filter! start typing">
             <span>
                 <i onclick="sort_legend_items('label', 'ascending')" class="sort fas fa-sort-alpha-down"></i>

@@ -145,6 +145,16 @@ window.batch_select = async function (checked) {
     }
 }
 
+window.batch_bold = async function (button) {
+    let boldSelector = button.textContent=="B" ? ":not(.bold)" : ".bold" // if checked, select not checked and vice versa
+
+    let lis = document.querySelectorAll("nav li:not(.hidden)" + boldSelector)
+    for (let li of lis) {
+        li.querySelector('label').click()        
+    }
+    button.textContent = button.textContent=='b' ? "B" : "b"
+}
+
 
 // sequential color hue generator (number to hue)
 function generate_next_color () {
